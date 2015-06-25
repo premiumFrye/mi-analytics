@@ -1,0 +1,24 @@
+{
+  "name": "mi-analytics",
+  "version": "0.0.1",
+  "authors": [
+    "Nicholas Frye <\"nick@mobileigniter.com\">",
+    "Bradley Orego <\"brad@mobileigniter.com\">"
+  ],
+  "description": "a BYO analytics service for angular",
+  "main": "mi-analytics.js",
+  "keywords": [
+    "angular",
+    "analytics",
+    "keen"
+  ],
+  "license": "MIT",
+  "homepage": "n/a",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
