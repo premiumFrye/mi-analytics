@@ -5,7 +5,7 @@
     "Nicholas Frye <\"nick@mobileigniter.com\">",
     "Bradley Orego <\"brad@mobileigniter.com\">"
   ],
-  "description": "a BYO analytics modul efor angular",
+  "description": "a BYO analytics module for angular",
   "main": "mi-analytics.js",
   "keywords": [
     "angular",
