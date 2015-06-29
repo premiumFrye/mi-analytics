@@ -1,0 +1,23 @@
+{
+  "name": "mi-analytics",
+  "version": "0.0.1",
+  "description": "a BYO analytics module for angular",
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://premiumFrye@bitbucket.org/mobileigniter/mi-analytics.git"
+  },
+  "keywords": [
+    "angularjs",
+    "directive",
+    "analytics"
+  ],
+  "author": "nick@mobileigniter.com, brad@mobileigniter.com",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/mobileigniter/mi-analytics#readme"
+}
