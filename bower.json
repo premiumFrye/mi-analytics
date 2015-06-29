@@ -12,6 +12,9 @@
     "analytics",
     "keen"
   ],
+  "dependencies" : {
+    "angular": "1.3.6"
+  },
   "license": "MIT",
   "homepage": "n/a",
   "ignore": [
