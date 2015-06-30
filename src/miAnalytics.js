@@ -264,6 +264,6 @@
     .service('$exceptionHandler', exceptionHandlerService)
     .service('miLogger', miLoggerService)
     .service('openUrlListener', openUrlListenerService)
-    .directive('miLogClick', miLogClickDirective);
+    .directive('miLogClick', miLogClickDirective)
     .run(openUrlRunBlock);
 }());
