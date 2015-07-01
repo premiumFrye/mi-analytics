@@ -67,14 +67,10 @@
           if (!dfd) {
             dfd = $q.defer();
           }
-          if (callback) {
-            return callback(error, success);
-          }
           if (error) {
-            dfd.reject(error);
+            return dfd.reject(callback(error, success));
           }
-          dfd.resolve(success);
-          return dfd.promise;
+          return dfd.resolve(callback(error, success));
         };
       if (angular.isObject(eventPayload)) {
         angular.extend(eventPayload, defaultPayload);
