@@ -20,7 +20,6 @@ describe('miLogger', function () {
       miLogger.logAction('success', testPayload)
         .then(function (result) {
           logResult = result;
-          // expect(result.result).to.equal('success');
         }, function (failure) {
           logResult = failure;
         });
@@ -33,6 +32,34 @@ describe('miLogger', function () {
     });
     it("receive a payload", function () {
       expect(logResult.payload).to.equal(testPayload);
+    });
+  });
+  describe('logging service using callbacks', function () {
+    beforeEach(inject(function ($rootScope, miLogger) {
+      var testLogAction = function (message, payload, callback) {
+          if (message === 'error') {
+            callback(true);
+          } else {
+            callback(false, payload);
+          }
+        },
+        testCallback = function (error, success) {
+          if (error) {
+            return 'error';
+          }
+          return success;
+        };
+      miLogger.setLogAction(testLogAction);
+      miLogger.logAction('success', testPayload, testCallback)
+        .then(function (result) {
+          logResult = result;
+        }, function (failure) {
+          logResult = failure;
+        });
+      $rootScope.$apply();
+    }));
+    it("set and call log action", function () {
+      expect(logResult).to.equal(testPayload);
     });
   });
 });
