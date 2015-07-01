@@ -1,22 +1,23 @@
 /*global describe, beforeEach, it, inject, expect*/
 describe('miLogger', function () {
-  var logResult;
+  var logResult,
+    testPayload = {data: 'test payload'};
   beforeEach(module('miAnalytics'));
-  describe('logging service', function () {
+  describe('logging service using promises', function () {
     beforeEach(inject(function ($rootScope, $q, miLogger) {
-      var testLogAction = function (message) {
+      var testLogAction = function (message, payload) {
           var dfd = $q.defer();
           if (message === 'success') {
-            dfd.resolve({result: 'success'});
+            dfd.resolve({'result': 'success', 'payload': payload});
           }
           if (message === 'failure') {
-            dfd.resolve({result: 'failure'});
+            dfd.resolve({'result': 'failure'});
           }
           return dfd.promise;
         };
 
       miLogger.setLogAction(testLogAction);
-      miLogger.logAction('success', {payload: 'test payload'})
+      miLogger.logAction('success', testPayload)
         .then(function (result) {
           logResult = result;
           // expect(result.result).to.equal('success');
@@ -27,8 +28,11 @@ describe('miLogger', function () {
 
       $rootScope.$apply();
     }));
-    it("set log action", function () {
+    it("set and call log action", function () {
       expect(logResult.result).to.equal('success');
+    });
+    it("receive a payload", function () {
+      expect(logResult.payload).to.equal(testPayload);
     });
   });
 });
