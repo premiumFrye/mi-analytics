@@ -81,18 +81,22 @@
       }
       if (!callback) {
         if (angular.isFunction(logAction)) {
-          dfd = logAction(eventName, eventPayload, callbackWrapper);
-        } else if (angular.isFunction(logService[logAction])) {
-          dfd = logService[logAction](eventName, eventPayload, callbackWrapper);
+          return $q.when(logAction(eventName, eventPayload));
+        }
+        if (angular.isFunction(logService[logAction])) {
+          return $q.when(logService[logAction](eventName, eventPayload));
         }
         return new Error(logAction + " is not a method on the log service provided: please correct configuration");
       }
-      // user's registered logAction must have returned a promise, or something we'll wrap in a promise.
-      if (dfd) {
-        // neat: http://stackoverflow.com/questions/22546007/how-can-i-tell-if-an-object-is-an-angular-q-promise#answer-22546086
-        return $q.when(dfd);
-      }
+
       dfd = $q.defer();
+      if (angular.isFunction(logAction)) {
+        logAction(eventName, eventPayload, callbackWrapper);
+      } else if (angular.isFunction(logService[logAction])) {
+        logService[logAction](eventName, eventPayload, callbackWrapper);
+      } else {
+        return new Error(logAction + " is not a method on the log service provided: please correct configuration");
+      }
       return dfd.promise;
 
     };
@@ -231,32 +235,32 @@
      * A handy directive for logging click actions
      */
     miLogClickDirective = ['miLogger', function (miLogger) {
-    return {
-      restrict: 'A',
-      link: function (scope, iElm, iAttrs) {
-        // would prefer to have used something tied in with ng-click, but using controllerAs
-        // made it difficult to call prev registered click events
-        iElm.bind('click', function () {
-          var payload = {'description': iAttrs.miLogClick};
-          if (iAttrs.miLogData) {
-            if (iAttrs.miLogData.indexOf('\'') > -1) { /// replace any '' with "" so JSON.parse doesn't bomb out
-              iAttrs.miLogData = iAttrs.miLogData.replace(/'/g, '\"');
+      return {
+        restrict: 'A',
+        link: function (scope, iElm, iAttrs) {
+          // would prefer to have used something tied in with ng-click, but using controllerAs
+          // made it difficult to call prev registered click events
+          iElm.bind('click', function () {
+            var payload = {'description': iAttrs.miLogClick};
+            if (iAttrs.miLogData) {
+              if (iAttrs.miLogData.indexOf('\'') > -1) { /// replace any '' with "" so JSON.parse doesn't bomb out
+                iAttrs.miLogData = iAttrs.miLogData.replace(/'/g, '\"');
+              }
+              payload.details = JSON.parse(iAttrs.miLogData); /// put details on if it's there
             }
-            payload.details = JSON.parse(iAttrs.miLogData); /// put details on if it's there
-          }
-          miLogger.logAction('click', payload);
-        });
-        // clean up after ourselves. not catching $ionicView events here, for some reason
-        scope.$on('$stateChangeStart', function () {
-          iElm.unbind('click');
-        });
-        // may as well support ngRoute too
-        scope.$on('$routeChangeStart', function () {
-          iElm.unbind('click');
-        });
-      }
-    };
-  }];
+            miLogger.logAction('click', payload);
+          });
+          // clean up after ourselves. not catching $ionicView events here, for some reason
+          scope.$on('$stateChangeStart', function () {
+            iElm.unbind('click');
+          });
+          // may as well support ngRoute too
+          scope.$on('$routeChangeStart', function () {
+            iElm.unbind('click');
+          });
+        }
+      };
+    }];
 
 
   angular.module('miAnalytics', [])
