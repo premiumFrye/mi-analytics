@@ -2,7 +2,7 @@
 ### A BYO analytics module for angular ###
 
 * A module with services to capture and report angular exceptions, http errors, page/stae views, and a directive for user click events
-* # alpha #
+* **alpha**
 
 ### Getting Started ###
 
@@ -15,7 +15,7 @@ angular.module('myAwesomeApp', 'miAnalytics')
   .run(function(miLogger) {
     // configure function definition to be called with every logging action 
     miLogger.setLogAction(myLogActionDefinition);
-    // configure an object and method name to be called with ever logging action
+    // configure an object and method name to be called with every logging action
     miLogger.setLogAction(
       'send', // name of method to call
       new MyLoggingService() // an object which has above named method to call with each logging action
@@ -23,7 +23,7 @@ angular.module('myAwesomeApp', 'miAnalytics')
   });
 ```
 
-** Congratulations! your above logging action will now automatically report all exceptions thrown by angular, http errors, and state changes with either ngRoute or ui-router
+* Congratulations! your above logging action will now automatically report all exceptions thrown by angular, http errors, and state changes with either ngRoute or ui-router
 
 3. (optional) Use `mi-log-action` to register click events
 
@@ -56,7 +56,7 @@ angular.module('myAwesomeApp')
       reportLongView = function () {
         miLogger.logAction('long view', {state: $location.state(), time: '30000'}, pokeUser);
       },
-      longView = $timeout(repotLongView, 30000);
+      longView = $timeout(reportLongView, 30000);
 
     $scope.$on('$stateChangeStart', cancelTimeout);
     // or ui-router: $scope.$on('$routeChangeStart');
@@ -67,4 +67,3 @@ angular.module('myAwesomeApp')
 ** Above example just waits 30 seconds to log a 'long view' event, with the payload {state: [stateName], time: 30000}, and then calls the callback pokeUser. If logAction fails, the callback pokeUser function receives an error and tries again in 5 seconds. Alternatively, if the function registered in `setLogAction` returns a callback, `logAction` will forward that promise.
 
 5. Continuing that fearless sifting and winnowing by which alone better apps may be made.
-
