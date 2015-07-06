@@ -23,7 +23,7 @@
     });
   ```
 
-* Congratulations! your above logging action will now automatically report all exceptions thrown by angular, http errors, and state changes with either ngRoute or ui-router
+###Congratulations!### your above logging action will now automatically report all exceptions thrown by angular, http errors, and state changes with either ngRoute or ui-router
 
 3. (optional) Use `mi-log-action` to register click events
 
@@ -64,6 +64,6 @@
 
   ```
 
-** Above example just waits 30 seconds to log a 'long view' event, with the payload {state: [stateName], time: 30000}, and then calls the callback pokeUser. If logAction fails, the callback pokeUser function receives an error and tries again in 5 seconds. Alternatively, if the function registered in `setLogAction` returns a callback, `logAction` will forward that promise.
+Above example just waits 30 seconds to log a 'long view' event, with the payload {state: [stateName], time: 30000}, and then calls the callback pokeUser. If logAction fails, the callback pokeUser function receives an error and tries again in 5 seconds. Alternatively, if the function registered in `setLogAction` returns a callback, `logAction` will forward that promise.
 
 5. Continuing that fearless sifting and winnowing by which alone better apps may be made.
