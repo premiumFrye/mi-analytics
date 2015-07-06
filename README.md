@@ -23,7 +23,7 @@
     });
   ```
 
-###Congratulations!### your above logging action will now automatically report all exceptions thrown by angular, http errors, and state changes with either ngRoute or ui-router
+### Congratulations! your above logging action will now automatically report all exceptions thrown by angular, http errors, and state changes with either ngRoute or ui-router
 
 3. (optional) Use `mi-log-action` to register click events
 
